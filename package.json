@@ -1,0 +1,27 @@
+{
+  "name": "scheduler-robot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./controlServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmp009/scheduler-robot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmp009/scheduler-robot/issues"
+  },
+  "homepage": "https://github.com/tmp009/scheduler-robot#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "keysender": "^2.3.0",
+    "puppeteer-core": "^22.6.4",
+    "yargs": "^17.7.2"
+  }
+}
