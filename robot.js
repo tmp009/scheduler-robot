@@ -60,7 +60,7 @@ async function main() {
     await client.keyTap('up')
 
     for (const category of jsonData.categories) {
-        if (!category.accounts) {
+        if (!category.accounts || !category.id) {
             await client.keyTap('down') // go to next account
             continue
         }
@@ -70,18 +70,33 @@ async function main() {
         await client.keyTap(['ctrl', 'down']) // enter category
 
         for (const account of category.accounts) {
+            if (!account.id) {
+                await client.keyTap('down') // skip empty account
+                continue;
+            }
             await client.keyTap(['ctrl', 'down']) // enter account
 
-            console.info('[info]: entering account ', account.id)
-            for (const data of account.values) {
-                console.info('[info]: ', data)
-                for (const value of data) {
-                    if (!value) {
-                        await client.keyTap('tab');
-                        continue
+            console.info('[info]: entering account', account.id);
+
+            try {
+                for (const data of account.values) {
+                    if (data[0] == 'Total Fringes') { // can't edit this field. so we'll skip it
+                        continue;
                     }
-                    await client.writeTextTab(value);
+
+                    console.info('[info]: ', data);
+
+                    for (const value of data) {
+                        if (!value) {
+                            await client.keyTap('tab');
+                        } else {
+                            await client.writeTextTab(value);
+                        }
+                    }
                 }
+
+            } finally {
+                await client.keyTap(['ctrl', 'd']);
             }
 
             console.info('[info]: exiting account')
